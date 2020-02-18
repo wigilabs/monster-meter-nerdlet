@@ -1,0 +1,7 @@
+{
+    "schemaType": "LAUNCHER",
+    "id": "moster-meter-nerdlet-launcher",
+    "description": "Describe me",
+    "displayName": "MosterMeterNerdletLauncher",
+    "rootNerdletId": "moster-meter-nerdlet-nerdlet"
+}
