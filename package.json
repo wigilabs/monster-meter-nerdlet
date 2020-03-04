@@ -1,22 +1,25 @@
 {
-    "private": true,
-    "name": "moster-meter-nerdlet",
-    "version": "0.1.0",
-    "scripts": {
-        "start": "nr1 nerdpack:serve",
-        "test": "exit 0"
-    },
-    "nr1": {
-        "uuid": "e9f41576-2074-4a8e-b988-a7a07d43e56d"
-    },
-    "dependencies": {
-        "prop-types": "^15.6.2",
-        "react": "^16.6.3",
-        "react-dom": "^16.6.3"
-    },
-    "browserslist": [
-        "last 2 versions",
-        "not ie < 11",
-        "not dead"
-    ]
+  "private": true,
+  "name": "moster-meter-nerdlet",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "nr1 nerdpack:serve",
+    "test": "exit 0",
+    "style": "stylus -u nib -w ./nerdlets/moster-meter-nerdlet-nerdlet/style.styl"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "nib": "^1.1.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not ie < 11",
+    "not dead"
+  ],
+  "nr1": {
+    "uuid": "e8e6d71c-b5d4-4ec4-848b-04ff503cc925"
+  }
 }

@@ -1,0 +1,517 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
+
+
+
+/* reset */
+
+body
+
+p
+
+  margin 0
+
+button
+
+  border 0
+
+  outline 0
+
+
+
+*
+
+  box-sizing border-box
+
+
+
+/* general */
+
+body
+
+  font-family 'Montserrat'
+
+
+
+/* app */
+
+#root
+
+  background white
+
+
+
+.header
+
+  color #6FCCD3
+
+  font-size 32px
+
+  font-weight bold
+
+  text-align center
+
+  box-shadow 0px 4px 4px rgba(0, 0, 0, 0.25)
+
+  .inner
+
+    width 1200px
+
+    margin auto
+
+    position relative
+
+    line-height 80px
+
+  .client
+
+    width 160px
+
+    position absolute
+
+    left 0
+
+    top 50%
+
+    transform translate(0, -50%)
+
+  .newrelic
+
+    width 150px
+
+    position absolute
+
+    right 0
+
+    top 50%
+
+    transform translate(0, -50%)
+
+
+
+.content
+
+  padding 16px
+
+  width 1200px
+
+  margin 24px auto
+
+  display flex
+
+  flex-wrap wrap
+
+  justify-content center
+
+.box
+
+  color #9B9B9B
+
+  width 340px
+
+  box-shadow 0px 3px 6px rgba(0, 0, 0, 0.1)
+
+  border-radius 16px
+
+  border 1px solid #C4C4C4
+
+  overflow hidden
+
+  margin 16px
+
+  &-bar
+
+    height 16px
+
+  &.red
+
+    .box-bar
+
+      background #FF1400
+
+      box-shadow 0px 2px 3px rgba(255, 0, 0, 0.4), inset 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px -4px 10px rgba(255, 255, 255, 0.3)
+
+    .msg
+
+      span
+
+        color #FF1400
+
+  &.yellow
+
+    .box-bar
+
+      background #FBBC05
+
+      box-shadow 0px 2px 3px rgba(251, 188, 5, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px -4px 10px rgba(255, 255, 255, 0.3)
+
+    .msg
+
+      span
+
+        color #FBBC05
+
+  &.green
+
+    .box-bar
+
+      background #34A853
+
+      box-shadow 0px 2px 5px rgba(52, 168, 83, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px -4px 10px rgba(255, 255, 255, 0.3)
+
+    .msg
+
+      span
+
+        color #34A853
+
+  &-header
+
+    display flex
+
+    align-items center
+
+    padding 8px 16px 4px 16px
+
+    img
+
+      width 30px
+
+      margin-right 8px
+
+    p
+
+      font-size 14px
+
+    span
+
+      font-size 10px
+
+  &-content
+
+    display flex
+
+    font-size 12px
+
+    display flex
+
+    justify-content space-between
+
+    align-items center
+
+    padding 4px 16px 8px 16px
+
+    .msg
+
+      border solid 1px #C4C4C4
+
+      box-shadow 0px 1.5px 4px rgba(0, 0, 0, 0.16)
+
+      padding 8px 16px
+
+      border-radius 4px
+
+  &-footer
+
+    border-top 1px solid rgba(#9B9B9B, .3)
+
+    display flex
+
+    justify-content space-between
+
+    align-items center
+
+    padding 4px 16px 8px 16px
+
+    &-bar
+
+      width 200px
+
+      .bar
+
+        height 8px
+
+        background #CECECE
+
+        border-radius 4px
+
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.161);
+
+        span
+
+          display block
+
+          width 40%
+
+          background #6FCCD3
+
+          height 8px
+
+          border-radius 4px
+
+      .text
+
+        display flex
+
+        justify-content space-between
+
+        font-size 10px
+
+        padding-top 4px
+
+        font-weight 300
+
+        span
+
+          color rgba(#008C99, .5)
+
+    &-overpay
+
+      p
+
+        font-weight 600
+
+        span
+
+          font-weight 300
+
+          color #FF2323
+
+
+
+.overlay
+
+  background rgba(#000, .5)
+
+  position absolute
+
+  top 0
+
+  bottom 0
+
+  width 100%
+
+  display none
+
+  &.visible
+
+    display block
+
+
+
+.detail
+
+  background white
+
+  max-width 1000px
+
+  margin 32px auto
+
+  border-radius 16px
+
+  overflow: hidden;
+
+  &-bar
+
+    height 16px
+
+  &.red
+
+    .detail-bar
+
+      background #FF1400
+
+      box-shadow 0px 2px 3px rgba(255, 0, 0, 0.4), inset 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px -4px 10px rgba(255, 255, 255, 0.3)
+
+  &.yellow
+
+    .detail-bar
+
+      background #FBBC05
+
+      box-shadow 0px 2px 3px rgba(251, 188, 5, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px -4px 10px rgba(255, 255, 255, 0.3)
+
+  &.green
+
+    .detail-bar
+
+      background #34A853
+
+      box-shadow 0px 2px 5px rgba(52, 168, 83, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px -4px 10px rgba(255, 255, 255, 0.3)
+
+
+
+  &-header
+
+    display flex
+
+    justify-content space-between
+
+    // margin 8px 16px
+
+    margin 8px 16px 0px 16px
+
+    border-bottom: 1px solid rgba(#9B9B9B, .3);
+
+    padding 8px
+
+    .avatar
+
+      display flex
+
+      align-items center
+
+      img
+
+        width 48px
+
+        margin-right 8px
+
+      p
+
+        color rgba(#000, .5)
+
+        font-size 18px
+
+        font-weight 600
+
+      span
+
+        color rgba(#000, .3)
+
+        font-weight 300
+
+        font-size 14px
+
+  .row
+
+    display flex
+
+    .column
+
+      padding 16px 24px
+
+      flex 1
+
+      &:not(:first-child)
+
+        border-left solid 1px #E1E1E1
+
+      .title
+
+        text-align center
+
+        color rgba(#008C99, .8)
+
+        font-weight bold
+
+      .subtitle
+
+        color rgba(#000, .5)
+
+        font-weight bold
+
+        span
+
+          font-weight 300
+
+          color #F10F00
+
+      .separator
+
+        border-bottom solid 1px #E1E1E1
+
+        margin 8px 0
+
+      .stat
+
+        display flex
+
+        color #9B9B9B
+
+        font-weight 300
+
+        align-items center
+
+        font-size 12px
+
+        padding 8px
+
+        .msg
+
+          box-shadow: 0px 1.5px 4px rgba(0, 0, 0, 0.16);
+
+          border solid 1px #C4C4C4
+
+          padding 4px 16px
+
+          border-radius 4px
+
+          flex 1
+
+          margin 0 32px
+
+      .table
+
+        color rgba(#000 .5)
+
+        font-size 12px
+
+        width 100%
+
+        td
+
+          padding 8px
+
+        span
+
+          font-weight bold
+
+          color #008C99
+
+          &.red
+
+            color #FF1400
+
+        .center
+
+          text-align center
+
+        .right
+
+          text-align right
+
+        &.line
+
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+
+          border: 1px solid rgba(#9B9B9B, .3);
+
+          span
+
+            font-weight 600
+
+
+
+
+
+      .button
+
+          background #008C99
+
+          border-radius 8px
+
+          color white
+
+          font-family 'Montserrat'
+
+          font-size 12px
+
+          padding 8px 16px
+
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.161);
+
+          &.center
+
+            display table
+
+            margin auto
