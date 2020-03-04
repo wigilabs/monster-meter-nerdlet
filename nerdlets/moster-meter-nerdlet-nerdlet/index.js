@@ -80,40 +80,17 @@ export default class MosterMeterNerdletNerdletNerdlet extends React.Component {
 
   async componentDidMount() {
 
-
-
-    let res_aws = await axios.get('http://localhost:3000/api/aws')
-
+    let res_aws = await axios.get('https://monster-meter-server.now.sh/api/aws')
     let aws = res_aws.data
-
-
-
     console.log('aws: ', aws)
-
-
-
     aws = Utils.enrich_cloud(aws, 'aws')
-
     console.log('aws: ', aws)
-
     this.setState({ aws })
-
-
-
-
-
-    let res_google = await axios.get('http://localhost:3000/api/google')
-
+    let res_google = await axios.get('https://monster-meter-server.now.sh/api/google')
     let google = res_google.data
-
-
-
     google = Utils.enrich_cloud(google, 'google')
-
     console.log('google: ', google)
-
     this.setState({ google })
-
   }
 
 
