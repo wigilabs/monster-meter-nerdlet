@@ -21,7 +21,7 @@ import salesforce_img  from './img/salesforce.png'
 // import mailgun from './img/mailgun.png'
 import Utils from './js/utils.js'
 
-export default class MosterMeterNerdletNerdletNerdlet extends React.Component {
+export default class MosterMeter extends React.Component {
 
   constructor(props) {
     super(props)
@@ -794,14 +794,9 @@ export default class MosterMeterNerdletNerdletNerdlet extends React.Component {
               </footer>
 
             </article>*/}
-
-
-
           </section>
-
         </div>
-
-      );
+     );
 
   }
 
