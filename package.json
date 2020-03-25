@@ -18,8 +18,5 @@
     "last 2 versions",
     "not ie < 11",
     "not dead"
-  ],
-  "nr1": {
-    "uuid": "c6b635bf-3e84-4f84-bba7-8bbb659c02a6"
-  }
+  ]
 }
