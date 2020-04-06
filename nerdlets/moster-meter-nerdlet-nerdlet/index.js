@@ -1,25 +1,22 @@
 import React from 'react'
-
 import axios from 'axios'
 
-
-
 import client   from './img/client.png'
-
 import newrelic from './img/newrelic.png'
 
-
-
 import aws_img from './img/aws.png'
-
 import google_img  from './img/google.png'
-
+import azure_img  from './img/aws.png'
 import zendesk_img  from './img/zendesk.png'
-
 import salesforce_img  from './img/salesforce.png'
-
 // import mailgun from './img/mailgun.png'
+
 import Utils from './js/utils.js'
+
+
+const URL = 'https://monster-meter-server.now.sh'
+// const URL = 'http://localhost:3000'
+
 
 export default class MosterMeter extends React.Component {
 
@@ -29,16 +26,17 @@ export default class MosterMeter extends React.Component {
       overlay: false,
       aws: {},
       google: {},
-      cloud: {}
+      azure: {},
+      zendesk: {},
+      salesforce: {},
+      cloud: {status: []}
     }
     this.openOverlay = this.openOverlay.bind(this);
     this.closeOverlay = this.closeOverlay.bind(this);
   }
 
 
-
   openOverlay(service) {
-    // console.log('service: ', service)
     this.setState({ cloud: service })
     this.setState({ overlay: true })
   }
@@ -48,17 +46,32 @@ export default class MosterMeter extends React.Component {
   }
 
   async componentDidMount() {
-    let res_aws = await axios.get('https://monster-meter-server.now.sh/api/aws')
+
+    let res_aws = await axios.get(URL + '/api/aws')
     let aws = res_aws.data
-    console.log('aws: ', aws)
     aws = Utils.enrich_cloud(aws, 'aws')
-    console.log('aws: ', aws)
     this.setState({ aws })
-    let res_google = await axios.get('https://monster-meter-server.now.sh/api/google')
+
+    let res_google = await axios.get(URL + '/api/google')
     let google = res_google.data
     google = Utils.enrich_cloud(google, 'google')
-    console.log('google: ', google)
     this.setState({ google })
+
+    let res_azure = await axios.get(URL + '/api/azure')
+    let azure = res_azure.data
+    azure = Utils.enrich_cloud(azure, 'azure')
+    this.setState({ azure })
+
+
+    let res_zendesk = await axios.get(URL + '/api/zendesk')
+    let zendesk = res_zendesk.data
+    zendesk = Utils.enrich_cloud(zendesk, 'zendesk')
+    this.setState({ zendesk })
+
+    let res_salesforce = await axios.get(URL + '/api/salesforce')
+    let salesforce = res_salesforce.data
+    salesforce = Utils.enrich_cloud(salesforce, 'salesforce')
+    this.setState({ salesforce })
   }
 
 
@@ -76,7 +89,7 @@ export default class MosterMeter extends React.Component {
           </header>
           <section class="content">
             <div className={this.state.overlay ? 'overlay visible' : 'overlay'}>
-              <div class={"detail " + this.state.cloud.status}>
+              <div class={"detail " + this.state.cloud.last_status_type}>
                 <div class="detail-bar"></div>
                 <header class="detail-header">
                   <div class="avatar">
@@ -94,9 +107,9 @@ export default class MosterMeter extends React.Component {
                     <p class="title">STATUS</p> <br/>
                     <p class="subtitle">ALERTS</p>
                     <div class="separator"></div>
-                    <div class="stat"><p>11/02/20</p> <p class="msg"><i>Incident at 16:47 UTC</i></p></div>}
-                    <div class="stat"><p>11/02/20</p> <p class="msg"><i>Incident at 16:47 UTC</i></p></div>
-                    <div class="stat"><p>11/02/20</p> <p class="msg"><i>Incident at 16:47 UTC</i></p></div>
+                    {this.state.cloud.status.map((state, index) => (
+                      <div class="stat"><p>{state.date}</p> <p class="msg"><i>{state.description}</i></p></div>
+                    ))}
                   </div>
 
                   <div class="column">
@@ -136,7 +149,7 @@ export default class MosterMeter extends React.Component {
                     <button class="button center">SHOW OPTIMIZATION CANDIDATES</button> <br/>
 
                     <div class="separator"></div> <br/>
-					
+
                     <table class="table line">
                       <tbody>
                       <tr>
@@ -145,7 +158,7 @@ export default class MosterMeter extends React.Component {
                         <td class="center"><span>ACTUAL USAGE</span></td>
                         <td class="center red"><span class="red">WASTE</span></td>
                       </tr>
-					  
+
                       <tr>
                         <td class="center">50 hosts</td>
                         <td class="center">50 hosts</td>
@@ -162,9 +175,7 @@ export default class MosterMeter extends React.Component {
               </div>
             </div>
 
-
-
-            <article class={"box " + this.state.aws.status} onClick={() => this.openOverlay(this.state.aws)}>
+            <article class={"box " + this.state.aws.last_status_type} onClick={() => this.openOverlay(this.state.aws)}>
               <div class="box-bar"></div>
               <header class="box-header">
                 <img src={aws_img} />
@@ -175,8 +186,9 @@ export default class MosterMeter extends React.Component {
               </header>
 
               <div class="box-content">
-                <p>11/02/20</p>
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
+                <p>{this.state.aws.last_status_date}</p>
+                {/*<p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>*/}
+                <p class="msg"><i>{this.state.aws.last_status_description}</i></p>
               </div>
 
               <footer class="box-footer">
@@ -195,9 +207,7 @@ export default class MosterMeter extends React.Component {
               </footer>
             </article>
 
-
-
-            <article class={"box " + this.state.google.status} onClick={() => this.openOverlay(this.state.google)}>
+            <article class={"box " + this.state.google.last_status_type} onClick={() => this.openOverlay(this.state.google)}>
               <div class="box-bar"></div>
               <header class="box-header">
                 <img src={google_img} />
@@ -208,8 +218,9 @@ export default class MosterMeter extends React.Component {
               </header>
 
               <div class="box-content">
-                <p>11/02/20</p>
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
+                <p>{this.state.google.last_status_date}</p>
+                {/*<p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>*/}
+                <p class="msg"><i>{this.state.google.last_status_description}</i></p>
               </div>
 
               <footer class="box-footer">
@@ -228,9 +239,40 @@ export default class MosterMeter extends React.Component {
               </footer>
             </article>
 
+            <article class={"box " + this.state.azure.last_status_type} onClick={() => this.openOverlay(this.state.azure)}>
+              <div class="box-bar"></div>
+              <header class="box-header">
+                <img src={azure_img} />
+                <div>
+                  <p>Microsoft Azure</p>
+                  <span>CLOUD</span>
+                </div>
+              </header>
+
+              <div class="box-content">
+                <p>{this.state.azure.last_status_date}</p>
+                {/*<p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>*/}
+                <p class="msg"><i>{this.state.azure.last_status_description}</i></p>
+              </div>
+
+              <footer class="box-footer">
+                <div class="box-footer-bar">
+                  <div class="bar"><span></span></div>
+                  <div class="text">
+                    <p><span><i>Service capacity</i></span></p>
+                    <p><span>{this.state.azure.r}</span> / 100</p>
+                  </div>
+                </div>
+
+                <div class="box-footer-overpay">
+                  <p>OVERPAY</p>
+                  <p><span>(${this.state.azure.overpay_yearly})</span></p>
+                </div>
+              </footer>
+            </article>
 
 
-            <article class={"box " + this.state.google.status} onClick={() => this.openOverlay(this.state.google)}>
+            <article class={"box " + this.state.zendesk.last_status_type} onClick={() => this.openOverlay(this.state.zendesk)}>
               <div class="box-bar"></div>
               <header class="box-header">
                 <img src={zendesk_img} />
@@ -241,8 +283,8 @@ export default class MosterMeter extends React.Component {
               </header>
 
               <div class="box-content">
-                <p>11/02/20</p>
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
+                <p>{this.state.zendesk.last_status_date}</p>
+                <p class="msg"><i>{this.state.zendesk.last_status_description}</i></p>
               </div>
 
               <footer class="box-footer">
@@ -261,9 +303,7 @@ export default class MosterMeter extends React.Component {
               </footer>
             </article>
 
-
-
-            <article class={"box " + this.state.google.status} onClick={() => this.openOverlay(this.state.google)}>
+            <article class={"box " + this.state.salesforce.last_status_type} onClick={() => this.openOverlay(this.state.salesforce)}>
               <div class="box-bar"></div>
               <header class="box-header">
                 <img src={salesforce_img} />
@@ -273,8 +313,8 @@ export default class MosterMeter extends React.Component {
                 </div>
               </header>
               <div class="box-content">
-                <p>11/02/20</p>
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
+                <p>{this.state.salesforce.last_status_date}</p>
+                <p class="msg"><i>{this.state.salesforce.last_status_description}</i></p>
               </div>
               <footer class="box-footer">
                 <div class="box-footer-bar">
@@ -291,509 +331,6 @@ export default class MosterMeter extends React.Component {
               </footer>
             </article>
 
-
-
-            {/*<article class="box red" onClick={this.openOverlay}>
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={google} />
-
-                <div>
-
-                  <p>Google Cloud</p>
-
-                  <span>CLOUD</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box red">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={google} />
-
-                <div>
-
-                  <p>Google Cloud</p>
-
-                  <span>CLOUD</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box red">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={google} />
-
-                <div>
-
-                  <p>Google Cloud</p>
-
-                  <span>CLOUD</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box yellow">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={aws} />
-
-                <div>
-
-                  <p>Amazon AWS</p>
-
-                  <span>CLOUD</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box yellow">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={aws} />
-
-                <div>
-
-                  <p>Amazon AWS</p>
-
-                  <span>CLOUD</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box yellow">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={aws} />
-
-                <div>
-
-                  <p>Amazon AWS</p>
-
-                  <span>CLOUD</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box green">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={mailgun} />
-
-                <div>
-
-                  <p>Mailgun</p>
-
-                  <span>MAIL</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box green">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={mailgun} />
-
-                <div>
-
-                  <p>Mailgun</p>
-
-                  <span>MAIL</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>
-
-
-
-            <article class="box green">
-
-              <div class="box-bar"></div>
-
-              <header class="box-header">
-
-                <img src={mailgun} />
-
-                <div>
-
-                  <p>Mailgun</p>
-
-                  <span>MAIL</span>
-
-                </div>
-
-              </header>
-
-              <div class="box-content">
-
-                <p>11/02/20</p>
-
-                <p class="msg"><i>Incident at 16:47 UTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+3</span></i></p>
-
-              </div>
-
-              <footer class="box-footer">
-
-                <div class="box-footer-bar">
-
-                  <div class="bar"><span></span></div>
-
-                  <div class="text">
-
-                    <p><span><i>Service capacity</i></span></p>
-
-                    <p><span>800</span>/1800</p>
-
-                  </div>
-
-                </div>
-
-                <div class="box-footer-overpay">
-
-                  <p>OVERPAY</p>
-
-                  <p><span>($324.00)</span></p>
-
-                </div>
-
-              </footer>
-
-            </article>*/}
           </section>
         </div>
      );
