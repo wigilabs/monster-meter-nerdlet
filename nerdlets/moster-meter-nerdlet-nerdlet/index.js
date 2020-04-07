@@ -45,7 +45,8 @@ export default class MosterMeter extends React.Component {
     this.setState({ overlay: false })
   }
 
-  async componentDidMount() {
+  async setup() {
+    console.log('setup ...')
 
     let res_aws = await axios.get(URL + '/api/aws')
     let aws = res_aws.data
@@ -62,7 +63,6 @@ export default class MosterMeter extends React.Component {
     azure = Utils.enrich_cloud(azure, 'azure')
     this.setState({ azure })
 
-
     let res_zendesk = await axios.get(URL + '/api/zendesk')
     let zendesk = res_zendesk.data
     zendesk = Utils.enrich_cloud(zendesk, 'zendesk')
@@ -74,7 +74,11 @@ export default class MosterMeter extends React.Component {
     this.setState({ salesforce })
   }
 
-
+  componentDidMount() {
+    let self = this
+    self.setup()
+    setInterval(function(){ self.setup() }, 20000)
+  }
 
   render() {
 
@@ -292,13 +296,13 @@ export default class MosterMeter extends React.Component {
                   <div class="bar"><span></span></div>
                   <div class="text">
                     <p><span><i>Service capacity</i></span></p>
-                    <p><span>3</span> / 10</p>
+                    <p><span>{this.state.zendesk.activeUsers}</span> / {this.state.zendesk.totalUsers}</p>
                   </div>
                 </div>
 
                 <div class="box-footer-overpay">
                   <p>OVERPAY</p>
-                  <p><span>($80.00)</span></p>
+                  <p><span>(${this.state.zendesk.overpay_yearly})</span></p>
                 </div>
               </footer>
             </article>
@@ -321,12 +325,12 @@ export default class MosterMeter extends React.Component {
                   <div class="bar"><span></span></div>
                   <div class="text">
                     <p><span><i>Service capacity</i></span></p>
-                    <p><span>3</span> / 10</p>
+                    <p><span>{this.state.salesforce.activeUsers}</span> / {this.state.salesforce.totalUsers}</p>
                   </div>
                 </div>
                 <div class="box-footer-overpay">
                   <p>OVERPAY</p>
-                  <p><span>($80.00)</span></p>
+                  <p><span>(${this.state.salesforce.overpay_yearly})</span></p>
                 </div>
               </footer>
             </article>
