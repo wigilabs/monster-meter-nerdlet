@@ -6,7 +6,7 @@ import newrelic from './img/newrelic.png'
 
 import aws_img from './img/aws.png'
 import google_img  from './img/google.png'
-import azure_img  from './img/aws.png'
+import azure_img  from './img/azure.png'
 import zendesk_img  from './img/zendesk.png'
 import salesforce_img  from './img/salesforce.png'
 // import mailgun from './img/mailgun.png'
@@ -14,7 +14,8 @@ import salesforce_img  from './img/salesforce.png'
 import Utils from './js/utils.js'
 
 
-const URL = 'https://monster-meter-server.now.sh'
+// const URL = 'https://monster-meter-server.now.sh'
+const URL = 'http://67.207.90.170:3000'
 // const URL = 'http://localhost:3000'
 
 

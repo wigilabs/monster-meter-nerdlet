@@ -1,6 +1,6 @@
 import aws_img from '../img/aws.png'
 import google_img  from '../img/google.png'
-import azure_img  from '../img/google.png'
+import azure_img  from '../img/azure.png'
 import zendesk_img  from '../img/zendesk.png'
 import salesforce_img  from '../img/salesforce.png'
 
