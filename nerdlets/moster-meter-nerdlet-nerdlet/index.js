@@ -9,14 +9,15 @@ import google_img  from './img/google.png'
 import azure_img  from './img/azure.png'
 import zendesk_img  from './img/zendesk.png'
 import salesforce_img  from './img/salesforce.png'
-// import mailgun from './img/mailgun.png'
 
 import Utils from './js/utils.js'
+import Config from '../../config.js'
 
 
-// const URL = 'https://monster-meter-server.now.sh'
-const URL = 'http://67.207.90.170:3000'
-// const URL = 'http://localhost:3000'
+const URL = Config.URL
+const COSTS = Config.COSTS
+console.log('URL: ', URL)
+console.log('COSTS: ', COSTS)
 
 
 export default class MosterMeter extends React.Component {
@@ -24,6 +25,7 @@ export default class MosterMeter extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      // COSTS: COSTS,
       overlay: false,
       aws: {},
       google: {},
@@ -292,20 +294,24 @@ export default class MosterMeter extends React.Component {
                 <p class="msg"><i>{this.state.zendesk.last_status_description}</i></p>
               </div>
 
-              <footer class="box-footer">
-                <div class="box-footer-bar">
-                  <div class="bar"><span></span></div>
-                  <div class="text">
-                    <p><span><i>Service capacity</i></span></p>
-                    <p><span>{this.state.zendesk.activeUsers}</span> / {this.state.zendesk.totalUsers}</p>
+              {COSTS ? (
+                <footer class="box-footer">
+                  <div class="box-footer-bar">
+                    <div class="bar"><span></span></div>
+                    <div class="text">
+                      <p><span><i>Service capacity</i></span></p>
+                      <p><span>{this.state.zendesk.activeUsers}</span> / {this.state.zendesk.totalUsers}</p>
+                    </div>
                   </div>
-                </div>
 
-                <div class="box-footer-overpay">
-                  <p>OVERPAY</p>
-                  <p><span>(${this.state.zendesk.overpay_yearly})</span></p>
-                </div>
-              </footer>
+                  <div class="box-footer-overpay">
+                    <p>OVERPAY</p>
+                    <p><span>(${this.state.zendesk.overpay_yearly})</span></p>
+                  </div>
+                </footer>
+              ) : (
+                <span></span>
+              )};
             </article>
 
             <article class={"box " + this.state.salesforce.last_status_type} onClick={() => this.openOverlay(this.state.salesforce)}>
@@ -321,19 +327,24 @@ export default class MosterMeter extends React.Component {
                 <p>{this.state.salesforce.last_status_date}</p>
                 <p class="msg"><i>{this.state.salesforce.last_status_description}</i></p>
               </div>
-              <footer class="box-footer">
-                <div class="box-footer-bar">
-                  <div class="bar"><span></span></div>
-                  <div class="text">
-                    <p><span><i>Service capacity</i></span></p>
-                    <p><span>{this.state.salesforce.activeUsers}</span> / {this.state.salesforce.totalUsers}</p>
+
+              {COSTS ? (
+                <footer class="box-footer">
+                  <div class="box-footer-bar">
+                    <div class="bar"><span></span></div>
+                    <div class="text">
+                      <p><span><i>Service capacity</i></span></p>
+                      <p><span>{this.state.salesforce.activeUsers}</span> / {this.state.salesforce.totalUsers}</p>
+                    </div>
                   </div>
-                </div>
-                <div class="box-footer-overpay">
-                  <p>OVERPAY</p>
-                  <p><span>(${this.state.salesforce.overpay_yearly})</span></p>
-                </div>
-              </footer>
+                  <div class="box-footer-overpay">
+                    <p>OVERPAY</p>
+                    <p><span>(${this.state.salesforce.overpay_yearly})</span></p>
+                  </div>
+                </footer>
+              ) : (
+                <span></span>
+              )};
             </article>
 
           </section>
