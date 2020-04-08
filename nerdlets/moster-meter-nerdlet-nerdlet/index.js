@@ -311,7 +311,7 @@ export default class MosterMeter extends React.Component {
                 </footer>
               ) : (
                 <span></span>
-              )};
+              )}
             </article>
 
             <article class={"box " + this.state.salesforce.last_status_type} onClick={() => this.openOverlay(this.state.salesforce)}>
@@ -344,7 +344,7 @@ export default class MosterMeter extends React.Component {
                 </footer>
               ) : (
                 <span></span>
-              )};
+              )}
             </article>
 
           </section>
