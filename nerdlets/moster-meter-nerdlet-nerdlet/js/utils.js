@@ -20,7 +20,7 @@ class Utils {
   }
 
   enrich_cloud(cloud, type) {
-
+    cloud.type = type
     // Status
     for (const state of cloud.status) {
       let time = parseFloat(state.time)

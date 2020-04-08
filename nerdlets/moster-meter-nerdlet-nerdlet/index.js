@@ -119,6 +119,11 @@ export default class MosterMeter extends React.Component {
                     ))}
                   </div>
 
+              {(this.state.cloud.type == 'aws'    ||
+                this.state.cloud.type == 'google' ||
+                this.state.cloud.type == 'azure'  ||
+                COSTS)? (
+
                   <div class="column">
                     <p class="title">OPTIMIZE</p> <br/>
                     <p class="subtitle">OVERPAY <span>(${this.state.cloud.overpay_yearly})</span></p>
@@ -178,6 +183,9 @@ export default class MosterMeter extends React.Component {
                     <button class="button center">SLA REPORT</button> <br/><br/>
 
                   </div>
+              ) : (
+                ""
+              )}
                 </section>
               </div>
             </div>
