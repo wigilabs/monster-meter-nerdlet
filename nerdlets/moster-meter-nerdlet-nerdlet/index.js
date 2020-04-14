@@ -8,13 +8,13 @@ import aws_img from './img/aws.png'
 import google_img  from './img/google.png'
 import azure_img  from './img/aws.png'
 import zendesk_img  from './img/zendesk.png'
-import salesforce_img  from './img/salesforce.png'
+import salesforce_img from './img/salesforce.png'
 // import mailgun from './img/mailgun.png'
 
 import Utils from './js/utils.js'
 
 
-const URL = 'https://monster-meter-server.now.sh'
+const URL = 'https://monster-meter-server-seven.now.sh'
 // const URL = 'http://localhost:3000'
 
 
@@ -25,10 +25,15 @@ export default class MosterMeter extends React.Component {
     this.state = {
       overlay: false,
       aws: {},
+      awsAlert: {},
       google: {},
+      gcpAlert: {},
       azure: {},
+      azureAlert:{},
       zendesk: {},
+      zendeskAlert:{},
       salesforce: {},
+      salesforceAlert: {},
       cloud: {status: []}
     }
     this.openOverlay = this.openOverlay.bind(this);
@@ -41,6 +46,7 @@ export default class MosterMeter extends React.Component {
     this.setState({ overlay: true })
   }
 
+
   closeOverlay() {
     this.setState({ overlay: false })
   }
@@ -49,6 +55,7 @@ export default class MosterMeter extends React.Component {
     console.log('setup ...')
 
     let res_aws = await axios.get(URL + '/api/aws')
+    //let res_aws = await axios({ method: "GET", url: "https://insights-api.newrelic.com/v1/accounts/2482859/query?nrql=FROM+SystemSample+SELECT+latest(coreCount),+latest(memoryTotalBytes),+max(cpuPercent),+max(memoryUsedBytes/memoryTotalBytes)*100 , latest(instanceType) +WHERE+coreCount+is+not+null+and+((instanceType+is+not+null+AND+instanceType!='unknown')+OR+ec2InstanceType+is+not+null)+and+providerAccountName=634037824681+LIMIT+2000+since+1+week ago", headers: {"X-Query-Key": "NRIQ-V-S-D7Tgcd4R7BHtumVd8QYaLVxzTDXG"} })
     let aws = res_aws.data
     aws = Utils.enrich_cloud(aws, 'aws')
     this.setState({ aws })
@@ -334,11 +341,8 @@ export default class MosterMeter extends React.Component {
                 </div>
               </footer>
             </article>
-
           </section>
         </div>
      );
-
   }
-
 }
